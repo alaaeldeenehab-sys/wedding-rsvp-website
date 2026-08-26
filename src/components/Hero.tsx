@@ -1,91 +1,57 @@
-import React from 'react';
-import { Heart } from 'lucide-react';
-import { weddingConfig } from '../config/weddingConfig';
+import React from 'react'
+import { Heart, MapPin, Clock } from 'lucide-react'
+import { weddingConfig } from '../config/weddingConfig'
 
 interface HeroProps {
-  onRsvpClick: () => void;
+  onRsvpClick: () => void
 }
 
 export const Hero: React.FC<HeroProps> = ({ onRsvpClick }) => {
-  const weddingDateTime = new Date(weddingConfig.weddingDate + 'T' + weddingConfig.weddingTime);
-  const formattedDate = weddingDateTime.toLocaleDateString('ar-EG', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-rose-50 to-white flex flex-col items-center justify-center px-4 py-12 text-center" dir="rtl">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-10 w-20 h-20 bg-amber-100 rounded-full opacity-20"></div>
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-rose-100 rounded-full opacity-20"></div>
-        <div className="absolute top-1/3 right-1/4 w-16 h-16 bg-pink-100 rounded-full opacity-20"></div>
-      </div>
-
-      <div className="relative z-10 max-w-3xl mx-auto">
-        {/* Main invitation text */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-8 animate-fade-in font-arabic">
-          {weddingConfig.invitationText}
-        </h1>
-
-        {/* Decorative divider */}
-        <div className="flex items-center justify-center gap-4 mb-12">
-          <div className="w-12 h-0.5 bg-gradient-to-l from-rose-300 to-transparent"></div>
-          <Heart className="w-6 h-6 text-rose-500 fill-rose-500" />
-          <div className="w-12 h-0.5 bg-gradient-to-r from-rose-300 to-transparent"></div>
+    <div className="min-h-screen bg-gradient-to-b from-rose-50 to-white" dir="rtl">
+      <div className="container mx-auto px-4 py-12">
+        <div className="text-center mb-12 animate-fade-in">
+          <div className="inline-block mb-6">
+            <Heart className="w-16 h-16 text-rose-400 animate-pulse" fill="currentColor" />
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-4" style={{fontFamily: 'Georgia, serif'}}>
+            {weddingConfig.coupleName}
+          </h1>
+          <p className="text-2xl text-gray-600 mb-2">{weddingConfig.invitationText}</p>
         </div>
 
-        {/* Couple names */}
-        <h2 className="text-3xl md:text-4xl font-serif text-gray-700 mb-12 animate-slide-up font-arabic">
-          {weddingConfig.groom} <span className="text-rose-500">&</span> {weddingConfig.bride}
-        </h2>
-
-        {/* Wedding details */}
-        <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-2xl p-8 mb-8 shadow-lg border border-rose-100">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Date and Time */}
-            <div className="font-arabic">
-              <p className="text-gray-600 mb-2">📅 يوم الزفاف</p>
-              <p className="text-xl font-semibold text-gray-800 mb-2">{formattedDate}</p>
-              <p className="text-lg text-rose-600 font-semibold">الساعة {weddingConfig.weddingTime}</p>
+        <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl mx-auto mb-12">
+          <div className="space-y-6">
+            <div className="flex items-center justify-center gap-3">
+              <Clock className="w-6 h-6 text-rose-400" />
+              <div>
+                <p className="text-gray-600">تاريخ الفرح</p>
+                <p className="text-2xl font-bold text-gray-800">
+                  {new Date(weddingConfig.weddingDate).toLocaleDateString('ar-SA')} الساعة {weddingConfig.weddingTime}
+                </p>
+              </div>
             </div>
 
-            {/* Venue */}
-            <div className="font-arabic">
-              <p className="text-gray-600 mb-2">📍 مكان الحفل</p>
-              <p className="text-xl font-semibold text-gray-800 mb-2">{weddingConfig.venueName}</p>
-              <p className="text-sm text-gray-600">{weddingConfig.venueAddress}</p>
+            <div className="flex items-center justify-center gap-3">
+              <MapPin className="w-6 h-6 text-rose-400" />
+              <div>
+                <p className="text-gray-600">قاعة الفرح</p>
+                <p className="text-lg font-semibold text-gray-800">{weddingConfig.venueName}</p>
+                <p className="text-gray-600">{weddingConfig.venueAddress}</p>
+              </div>
             </div>
-          </div>
-
-          {/* Map Link */}
-          <div className="mt-6">
-            <a
-              href={weddingConfig.googleMapsLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block text-rose-600 hover:text-rose-700 font-semibold text-sm underline font-arabic"
-            >
-              📍 اضغط هنا لرؤية المكان على الخريطة
-            </a>
           </div>
         </div>
 
-        {/* CTA Button */}
-        <button
-          onClick={onRsvpClick}
-          className="bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold py-4 px-12 rounded-full text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 font-arabic"
-        >
-          ✨ تأكيد الحضور
-        </button>
-
-        {/* Decorative text */}
-        <p className="text-gray-600 mt-12 text-sm font-arabic leading-relaxed">
-          نتطلع لمشاركتكم أجمل لحظات حياتنا
-        </p>
+        <div className="text-center">
+          <button
+            onClick={onRsvpClick}
+            className="bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 text-white font-bold py-3 px-8 rounded-lg transition transform hover:scale-105 text-lg"
+          >
+            تأكيد الحضور
+          </button>
+        </div>
       </div>
     </div>
-  );
-};
+  )
+}
