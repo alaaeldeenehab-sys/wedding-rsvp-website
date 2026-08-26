@@ -1,0 +1,35 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Build project
+      run: npm run build
+      env:
+        VITE_SUPABASE_URL: https://quyuxfpkquhfpteghdqg.supabase.co
+        VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1eXV4ZnBrcXVoZnB0ZWdoZHFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTMwMTI0MDAsImV4cCI6MjAwODY4MjQwMH0.rJ8UfN3z7xK9_C2m4vN5oP6qR7sT8uV9wX0yZ1aB2cD
+        VITE_ADMIN_PASSWORD: WeddingRSVP2024!Secure
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
